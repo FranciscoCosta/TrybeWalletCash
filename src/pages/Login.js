@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import getUser from '../redux/actions/index';
 
 const MIN_REQUEST_PASSWORD = 5;

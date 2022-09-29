@@ -11,6 +11,7 @@ class Header extends Component {
   }
 
   render() {
+    const { email } = this.props;
     const { valor, currency } = this.state;
     return (
       <div className="Header">
@@ -28,4 +29,13 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  pessoal: state.dadosPersonalReducer.dadosPersonal,
+  profissional: state.dadosPersonalReducer.dadosProfissional,
+});
+
+Header.propTypes = {
+  email: PropTypes.string.isRequired,
+};
+
+export default connect(mapStateToProps)(Header);
