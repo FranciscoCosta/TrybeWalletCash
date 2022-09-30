@@ -1,18 +1,20 @@
-// // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-// const INITIAL_STATE = {
-//   user: {
-//     email: '',
-//   },
-// };
+import { GET_CURRENCIES, IS_LOADING } from '../actions/index';
 
-// function user(state = INITIAL_STATE, action) {
-//   switch (action.type) {
-//   case SUBMIT_FORM_LOGIN:
-//     return { ...state, user: { ...action.payload } };
+const INITIAL_STATE = {
+  loading: false,
+  currencies: [],
+};
 
-//   default:
-//     return state;
-//   }
-// }
+function currency(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case IS_LOADING:
+    return { ...state, loading: true };
+  case GET_CURRENCIES:
+    console.log(action);
+    return { ...state, currencies: action.currencies, loading: false };
+  default:
+    return state;
+  }
+}
 
-// export default user;
+export default currency;

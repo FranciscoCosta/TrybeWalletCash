@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import './Header.css';
 
 class Header extends Component {
   constructor() {
@@ -15,14 +19,23 @@ class Header extends Component {
     const { valor, currency } = this.state;
     return (
       <div className="Header">
-        <div className="Header__user">
-          <p data-testid="email-field">{email}</p>
+        <div className="Header__user header-info">
+          <p data-testid="email-field">
+            <span>Email: </span>
+            { email }
+          </p>
         </div>
-        <div className="Header__expenses">
-          <p data-testid="total-field">{valor}</p>
+        <div className="Header__expenses header-info">
+          <p data-testid="total-field">
+            <span>Total de despesas: </span>
+            {valor}
+          </p>
         </div>
-        <div className="Header__currency">
-          <p data-testid="header-currency-field">{currency}</p>
+        <div className="Header__currency header-info">
+          <p data-testid="header-currency-field">
+            <span>Moedas: </span>
+            {currency}
+          </p>
         </div>
       </div>
     );
@@ -30,8 +43,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  pessoal: state.dadosPersonalReducer.dadosPersonal,
-  profissional: state.dadosPersonalReducer.dadosProfissional,
+  email: state.user.email,
 });
 
 Header.propTypes = {
