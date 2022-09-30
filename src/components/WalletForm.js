@@ -9,11 +9,12 @@ class WalletForm extends Component {
     super();
 
     this.state = {
-      valueCoin: 0,
+      valueCoin: '',
       descripton: '',
-      coin: '',
-      payment: '',
-      category: '',
+      coin: 'USD',
+      payment: 'Dinheiro',
+      category: 'Alimentação',
+      id: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,34 +41,35 @@ class WalletForm extends Component {
   };
 
   handleClick = async () => {
-    const { coin, valueCoin, descripton, payment, category } = this.state;
+    const { coin, valueCoin, descripton, payment, category, id } = this.state;
     const { dispatch } = this.props;
-    const endpoint = `https://economia.awesomeapi.com.br/json/${coin}`;
+    const endpoint = 'https://economia.awesomeapi.com.br/json/all';
     const coinInfo = await fetch(endpoint);
     const coinJSON = await coinInfo.json();
-    const ratio = coinJSON[0].ask;
-    console.log(ratio);
+
     const expenseObj = {
-      valueExpense: valueCoin * ratio,
-      descripton,
-      payment,
-      category,
-      ratio,
+      value: valueCoin,
+      description: descripton,
+      method: payment,
+      currency: coin,
+      tag: category,
+      exchangeRates: coinJSON,
+      id,
     };
     dispatch(getExpenses(expenseObj));
     this.setState({
-      valueCoin: 0,
+      valueCoin: '',
       descripton: '',
-      coin: '',
-      payment: '',
-      category: '',
+      coin: 'USD',
+      payment: 'Dinheiro',
+      category: 'Alimentação',
+      id: id + 1,
     });
   };
 
   render() {
     const { valueCoin, descripton } = this.state;
     const { loading, currencies } = this.props;
-
     if (loading) return <h1>Carrengado...</h1>;
     return (
       <div className="WalletForm">
