@@ -36,7 +36,7 @@ class Header extends Component {
         </div>
         <div className="Header__currency header-info">
           <p data-testid="header-currency-field">
-            <span>Moedas: </span>
+            <span>Moeda: </span>
             {currency}
           </p>
         </div>
