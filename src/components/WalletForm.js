@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, string, PropTypes } from 'prop-types';
-import { getCurrencies, isLoading, getExpenses } from '../redux/actions/index';
+import { getCurrencies, isLoading,
+  getExpenses, saveEditing } from '../redux/actions/index';
 import './WalletForm.css';
 
 class WalletForm extends Component {
   constructor() {
     super();
-
+    const category = 'Alimentação';
     this.state = {
       valueCoin: '',
       descripton: '',
       coin: 'USD',
       payment: 'Dinheiro',
-      category: 'Alimentação',
+      category,
       id: 0,
     };
 
@@ -42,11 +43,10 @@ class WalletForm extends Component {
 
   handleClick = async () => {
     const { coin, valueCoin, descripton, payment, category, id } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, editing } = this.props;
     const endpoint = 'https://economia.awesomeapi.com.br/json/all';
     const coinInfo = await fetch(endpoint);
     const coinJSON = await coinInfo.json();
-
     const expenseObj = {
       value: valueCoin,
       description: descripton,
@@ -56,20 +56,41 @@ class WalletForm extends Component {
       exchangeRates: coinJSON,
       id,
     };
-    dispatch(getExpenses(expenseObj));
-    this.setState({
-      valueCoin: '',
-      descripton: '',
-      coin: 'USD',
-      payment: 'Dinheiro',
-      category: 'Alimentação',
-      id: id + 1,
-    });
+    if (!editing) {
+      dispatch(getExpenses(expenseObj));
+      this.setState({
+        valueCoin: '',
+        descripton: '',
+        coin: 'USD',
+        payment: 'Dinheiro',
+        category,
+        id: id + 1,
+      });
+    }
+    if (editing) {
+      const editObject = {
+        value: valueCoin,
+        description: descripton,
+        method: payment,
+        currency: coin,
+        tag: category,
+        exchangeRates: coinJSON,
+      };
+      dispatch(saveEditing(editObject));
+      this.setState({
+        valueCoin: '',
+        descripton: '',
+        coin: 'USD',
+        payment: 'Dinheiro',
+        category,
+        id,
+      });
+    }
   };
 
   render() {
     const { valueCoin, descripton } = this.state;
-    const { loading, currencies } = this.props;
+    const { loading, currencies, editing } = this.props;
     if (loading) return <h1>Carrengado...</h1>;
     return (
       <div className="WalletForm">
@@ -112,20 +133,15 @@ class WalletForm extends Component {
             onChange={ this.handleChange }
             name="payment"
           >
-            <option name="Dinheiro" value="Dinheiro">Dinheiro</option>
-            <option
-              name="Cartão de crédito"
-              value="Cartão de crédito"
-            >
+            <option name="Dinheiro" value="Dinheiro">
+              Dinheiro
+            </option>
+            <option name="Cartão de crédito" value="Cartão de crédito">
               Cartão de crédito
             </option>
-            <option
-              name="Cartão de débito"
-              value="Cartão de débito"
-            >
+            <option name="Cartão de débito" value="Cartão de débito">
               Cartão de débito
             </option>
-
           </select>
           <select
             data-testid="tag-input"
@@ -133,38 +149,24 @@ class WalletForm extends Component {
             onChange={ this.handleChange }
             name="category"
           >
-            <option name="Alimentação" value="Alimentação">Alimentação</option>
-            <option
-              name="Lazer"
-              value="Lazer"
-            >
+            <option name="Alimentação" value="Alimentação">
+              Alimentação
+            </option>
+            <option name="Lazer" value="Lazer">
               Lazer
             </option>
-            <option
-              name="Transporte"
-              value="Transporte"
-            >
+            <option name="Transporte" value="Transporte">
               Transporte
             </option>
-            <option
-              name="Saúde"
-              value="Saúde"
-            >
+            <option name="Saúde" value="Saúde">
               Saúde
             </option>
-            <option
-              name="Trabalho"
-              value="Trabalho"
-            >
+            <option name="Trabalho" value="Trabalho">
               Trabalho
             </option>
-
           </select>
-          <button
-            type="button"
-            onClick={ this.handleClick }
-          >
-            Adicionar despesa
+          <button type="button" onClick={ this.handleClick }>
+            { editing ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
         </div>
       </div>
@@ -176,11 +178,16 @@ WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   currencies: arrayOf(string).isRequired,
+  editing: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ wallet: { loading, currencies } }) => ({
+const mapStateToProps = ({ wallet: { loading, currencies, editing,
+  expenses, idEdit } }) => ({
   loading,
   currencies,
+  editing,
+  expenses,
+  idEdit,
 });
 
 export default connect(mapStateToProps)(WalletForm);

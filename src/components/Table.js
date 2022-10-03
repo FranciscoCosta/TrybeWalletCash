@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Table.css';
 import { connect } from 'react-redux';
 import { arrayOf, shape } from 'prop-types';
-import { removeExpenses } from '../redux/actions/index';
+import { removeExpenses, edditingExpenses } from '../redux/actions/index';
 
 class Table extends Component {
   deleteRow = (id) => {
@@ -11,6 +11,12 @@ class Table extends Component {
       expense.id !== id
     ));
     dispatch(removeExpenses(removeItem));
+  };
+
+  editRow = (id) => {
+    const { dispatch } = this.props;
+
+    dispatch(edditingExpenses(id));
   };
 
   render() {
@@ -47,7 +53,13 @@ class Table extends Component {
                 </td>
                 <td className="cell">Real</td>
                 <td className="cell">
-                  <button type="button">Editar</button>
+                  <button
+                    type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => this.editRow(e.id) }
+                  >
+                    Editar
+                  </button>
                   <button
                     type="button"
                     data-testid="delete-btn"
