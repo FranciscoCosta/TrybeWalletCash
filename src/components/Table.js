@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import './Table.css';
 import { connect } from 'react-redux';
 import { arrayOf, shape } from 'prop-types';
+import { removeExpenses } from '../redux/actions/index';
 
 class Table extends Component {
+  deleteRow = (id) => {
+    const { expenses, dispatch } = this.props;
+    const removeItem = expenses.filter((expense) => (
+      expense.id !== id
+    ));
+    dispatch(removeExpenses(removeItem));
+  };
+
   render() {
     const { expenses } = this.props;
     return (
@@ -39,7 +48,13 @@ class Table extends Component {
                 <td className="cell">Real</td>
                 <td className="cell">
                   <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.deleteRow(e.id) }
+                  >
+                    Excluir
+                  </button>
                 </td>
               </tr>
             ))}

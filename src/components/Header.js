@@ -16,10 +16,9 @@ class Header extends Component {
   render() {
     const { email, expenses } = this.props;
     const { currency } = this.state;
-    console.log(expenses);
     const a = expenses.map((coin) => coin.value * coin.exchangeRates[coin.currency].ask);
     const final = a.reduce((acc, curr) => acc + curr, 0);
-    const total = Number(final.toFixed(2));
+    const total = final.toFixed(2);
     return (
       <div className="Header">
         <div className="Header__user header-info">

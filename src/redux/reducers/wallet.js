@@ -1,4 +1,6 @@
-import { GET_CURRENCIES, IS_LOADING, GET_EXPENSES } from '../actions/index';
+import { GET_CURRENCIES,
+  IS_LOADING, GET_EXPENSES,
+  REMOVE_EXPENSES } from '../actions/index';
 
 const INITIAL_STATE = {
   loading: false,
@@ -14,6 +16,8 @@ function currency(state = INITIAL_STATE, action) {
     return { ...state, currencies: action.currencies, loading: false };
   case GET_EXPENSES:
     return { ...state, expenses: [...state.expenses, action.expenses] };
+  case REMOVE_EXPENSES:
+    return { ...state, expenses: [...action.expenses] };
   default:
     return state;
   }
