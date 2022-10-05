@@ -28,7 +28,6 @@ function currency(state = INITIAL_STATE, action) {
   case EDDITING_EXPENSES:
     return { ...state, editing: true, idEdit: action.id };
   case SAVE_EDIT:
-    console.log(action, state);
     return {
       ...state,
       editing: false,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Login.css';
 import { connect } from 'react-redux';
+import { AiOutlineWallet } from "@react-icons/all-files/ai/AiOutlineWallet";
 import PropTypes from 'prop-types';
 import getUser from '../redux/actions/index';
 
@@ -51,7 +52,10 @@ class Login extends Component {
     const { email, password, btnDisable } = this.state;
     return (
       <div className="Login">
-        <h1 className="Login__title">TRYBEWALLET</h1>
+        <div className="Login__header">
+          <h1 className="Login__title">TRYBEWALLET</h1>
+          <AiOutlineWallet size="100" color="#1a1a17" className='Login__logo'/>
+        </div>
         <div className="Login__container">
           <form className="Login__form">
             <div className="Login__form-field">

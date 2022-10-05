@@ -96,23 +96,23 @@ class WalletForm extends Component {
       <div className="WalletForm">
         <div className="WalletForm__container">
           <input
-            data-testid="value-input"
-            type="number"
-            className="WalletForm__info"
-            placeholder="Despesas"
-            required
-            name="valueCoin"
-            value={ valueCoin }
-            onChange={ this.handleChange }
-          />
-          <input
             data-testid="description-input"
             type="text"
             className="WalletForm__info"
-            placeholder="Descrição"
+            placeholder="Descrição da despesa"
             required
             name="descripton"
             value={ descripton }
+            onChange={ this.handleChange }
+          />
+          <input
+            data-testid="value-input"
+            type="number"
+            className="WalletForm__info"
+            placeholder="Valor da Despesa"
+            required
+            name="valueCoin"
+            value={ valueCoin }
             onChange={ this.handleChange }
           />
           <select
@@ -165,7 +165,7 @@ class WalletForm extends Component {
               Trabalho
             </option>
           </select>
-          <button type="button" onClick={ this.handleClick }>
+          <button type="button" className="Walletform__sub" onClick={ this.handleClick }>
             { editing ? 'Editar despesa' : 'Adicionar despesa' }
           </button>
         </div>

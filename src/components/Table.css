@@ -1,12 +1,15 @@
 body {
   background-color: #00b295;
+  overflow-x: hidden;
+  min-height: 200vh;
 }
 
 .Table {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  min-height: 8vh;
+  margin-top: 24vh;
   width: 100%;
 }
 
@@ -15,12 +18,42 @@ body {
   display: flex;
   flex-direction: column;
   height: 8vh;
-  margin: 10px;
   width: 100vw;
 }
 
 .cell {
+  font-size: 1.4rem;
   height: 100px;
+  padding: 2rem 0;
   text-align: center;
   width: 200px;
+}
+
+.Table__Chart-chart {
+  background-color: aliceblue;
+  border-radius: 12px;
+  box-shadow: 1px 8px 15px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  padding: 10px;
+  position: absolute;
+  right: 45%;
+  text-align: center;
+}
+
+.Table svg {
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 1px 8px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 4px;
+  text-align: center;
+}
+
+.Table svg:hover {
+  background-color: #2ee59d;
+  box-shadow: 1px 15px 20px rgba(46, 229, 157, 0.4);
+  color: white;
+  transform: translateY(-5px);
+  transition: 0.5s ease all;
 }

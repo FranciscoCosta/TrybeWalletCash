@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { arrayOf, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
-
+import { FaMoneyBillWaveAlt } from '@react-icons/all-files/fa/FaMoneyBillWaveAlt';
+import { FaCashRegister } from '@react-icons/all-files/fa/FaCashRegister';
+import { MdEmail } from '@react-icons/all-files/md/MdEmail';
 import './Header.css';
+import SocialMedia from './SocialMedia';
 
 class Header extends Component {
   constructor() {
@@ -22,22 +25,28 @@ class Header extends Component {
     return (
       <div className="Header">
         <div className="Header__user header-info">
+          <MdEmail size={ 25 } />
           <p data-testid="email-field">
             <span>Email: </span>
             { email }
           </p>
         </div>
-        <div className="Header__expenses header-info">
-          <p data-testid="total-field">
-            {/* <span>Total de despesas: </span> */}
-            {total}
-          </p>
-        </div>
         <div className="Header__currency header-info">
+          <FaMoneyBillWaveAlt size={ 25 } />
           <p data-testid="header-currency-field">
             <span>Moeda: </span>
             {currency}
           </p>
+        </div>
+        <div className="Header__expenses header-info">
+          <FaCashRegister size={ 25 } />
+          <p data-testid="total-field">
+            <span>Total de despesas: </span>
+            {total}
+          </p>
+        </div>
+        <div>
+          <SocialMedia />
         </div>
       </div>
     );
